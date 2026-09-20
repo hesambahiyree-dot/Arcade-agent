@@ -1,0 +1,141 @@
+You are an expert full-stack developer. Build a cross-platform AI coding assistant app called "ArcadeAgent" with the following exact architecture.
+
+## Core Concept
+A local-first, BYOK (Bring Your Own Key) AI agent that lets users describe an app or game in natural language, and the agent builds it automatically (HTML/CSS/JS). The output runs in a WebView inside the app. The app must work on Windows (Electron) and Android (Capacitor).
+
+## Tech Stack
+- Frontend: React + TypeScript + Vite
+- Editor: Monaco Editor (@monaco-editor/react)
+- Desktop wrapper: Electron + electron-builder
+- Mobile wrapper: Capacitor (@capacitor/core, @capacitor/cli, @capacitor/android)
+- AI: Google Gemini API via @google/generative-ai (BYOK - user provides key)
+- State: Zustand
+- Styling: TailwindCSS
+- i18n: react-i18next (for English/Persian support)
+
+## Project Structure
+Create this folder structure:
+arcade-agent/
+├── electron/
+│   ├── main.ts
+│   └── preload.ts
+├── src/
+│   ├── components/
+│   │   ├── ChatPanel.tsx
+│   │   ├── EditorPanel.tsx
+│   │   ├── PreviewPanel.tsx
+│   │   ├── ApiKeyModal.tsx
+│   │   ├── SettingsModal.tsx   # New: Language + Theme
+│   │   └── Layout.tsx
+│   ├── core/
+│   │   ├── agent.ts
+│   │   ├── tools.ts
+│   │   ├── gemini.ts
+│   │   └── keyManager.ts
+│   ├── store/
+│   │   └── useStore.ts
+│   ├── locales/                # New: Translation files
+│   │   ├── en.json
+│   │   └── fa.json
+│   ├── i18n.ts                 # New: i18n config
+│   ├── App.tsx
+│   └── main.tsx
+├── capacitor.config.ts
+├── electron-builder.json
+├── tailwind.config.js
+├── vite.config.ts
+├── package.json
+└── README.md
+
+## Feature 1: Internationalization (i18n)
+- Use react-i18next.
+- Create two locale files: en.json (English) and fa.json (Persian).
+- All UI text must use translation keys.
+- Default language must be Persian (fa). RTL layout must be enabled when Persian is selected.
+- Add a language switcher in the Settings modal.
+- Persist language choice in localStorage.
+
+## Feature 2: Theme System
+- Support three theme modes: Light, Dark, and System.
+- Default theme is System.
+- Use TailwindCSS dark mode with class strategy.
+- Add a theme switcher in the Settings modal.
+- Persist theme choice in localStorage.
+
+## Feature 3: Chat Panel
+- A textarea for the user prompt.
+- A "Build" button.
+- A message list showing conversation history.
+
+## Feature 4: Agent Core (src/core/agent.ts)
+Implement this exact loop:
+1. Receive user prompt.
+2. Send to Gemini with system instruction + tool definitions.
+3. Parse response. If it contains a tool call, execute it.
+4. Append tool result to conversation history.
+5. Loop until model returns a final text response or max 15 iterations.
+
+System instruction for Gemini:
+"You are an expert web developer agent. You build complete web apps using only HTML, CSS, and JavaScript. You have access to tools: create_file, read_file, list_files, edit_file. Always create a working index.html. When done, respond with 'BUILD_COMPLETE'."
+
+## Feature 5: Tools (src/core/tools.ts)
+Define these tools:
+- create_file(path: string, content: string)
+- read_file(path: string)
+- list_files(directory: string)
+- edit_file(path: string, oldContent: string, newContent: string)
+
+## Feature 6: Gemini Client (src/core/gemini.ts)
+- Use @google/generative-ai SDK.
+- Support function calling (tools).
+- Read API key from keyManager.
+
+## Feature 7: Key Manager (src/core/keyManager.ts)
+- Store multiple API keys in localStorage (obfuscated).
+- Rotate keys automatically on 429 or 403 errors.
+- Track usage count per key.
+
+## Feature 8: Model Selection (IMPORTANT - Use the latest models)
+The model dropdown must include the newest available Gemini models. Based on the current Gemini app interface, use this exact list:
+- 3.6 Flash (All-around help)
+- 3.5 Flash-Lite (Fastest answers)
+- 3.1 Pro (Advanced reasoning)
+- Extended thinking (Complex problem solving)
+Also include a fallback list for API compatibility:
+- gemini-2.5-flash
+- gemini-2.5-pro
+Add an option for "Custom model name" where the user can type any model string manually.
+
+## Feature 9: Editor + Preview
+- Left panel: Monaco Editor showing generated files (tabs for each file).
+- Right panel: Live preview using an iframe with srcdoc.
+- A "Run" button to refresh preview.
+
+## Feature 10: Electron Setup
+- electron/main.ts: create BrowserWindow (1400x900).
+- electron/preload.ts: expose safe IPC for file system operations.
+- electron-builder.json: build .exe for Windows.
+
+## Feature 11: Capacitor Setup
+- capacitor.config.ts with appId "com.arcadeagent.app", webDir "dist".
+- On Android, use Capacitor Filesystem plugin instead of Node fs.
+- Create an abstraction layer: src/core/fs.ts.
+
+## Feature 12: Styling
+- Support both Light and Dark themes.
+- TailwindCSS.
+- Three-column layout: Chat (300px) | Editor (flex) | Preview (flex).
+
+## Deliverables
+1. All files listed above, fully implemented.
+2. A README.md with install/run/build instructions.
+3. A .github/workflows/build.yml for automatic APK + EXE builds.
+
+## Important Constraints
+- Do NOT use any paid API.
+- Do NOT require a backend server.
+- Default language: Persian (fa) with RTL support.
+- Default theme: System.
+- Write clean, commented TypeScript.
+
+Start by creating the folder structure and package.json, then implement each file one by one.

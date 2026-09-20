@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "ArcadeAgent",
+      "hasCanvas": false,
+      "bodyTextLen": 660,
+      "bodyTextHash": "d5d2e8cea47b30bc7f3d01ad722f249e21ded22cd02705cc8a6b46dcfa97770e",
+      "bodyTextPrefix": "ArcadeAgent سازندهٔ هوش مصنوعیِ محلی 3.6 Flash آماده بریف چه چیز",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "ArcadeAgent",
+      "hasCanvas": false,
+      "bodyTextLen": 426,
+      "bodyTextHash": "6a700338d52507096e8c1771c0fd72c92d70de486e3b73dde3bf0b0898de617f",
+      "bodyTextPrefix": "ArcadeAgent بریف چه چیزی بسازیم؟ با زبان طبیعی توضیح بده. ایجنت ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

@@ -1,0 +1,71 @@
+name: Build APK and EXE
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: dist
+
+  windows-exe:
+    needs: web
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: dist
+      - run: npm install --save-dev electron electron-builder typescript esbuild
+      - run: npx esbuild electron/main.ts electron/preload.ts --outdir=electron --platform=node --format=cjs --external:electron
+      - run: npx electron-builder --win nsis
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-exe
+          path: release/*.exe
+
+  android-apk:
+    needs: web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: dist
+      - run: npm install --save-dev @capacitor/core @capacitor/cli @capacitor/android @capacitor/filesystem
+      - run: npx cap add android || true
+      - run: npx cap sync android
+      - run: cd android && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: android/app/build/outputs/apk/debug/*.apk

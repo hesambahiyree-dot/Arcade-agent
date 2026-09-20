@@ -1,0 +1,105 @@
+{
+  "app": {
+    "name": "ArcadeAgent",
+    "tagline": "Describe an app. The agent builds it.",
+    "shortTagline": "Local-first AI builder"
+  },
+  "nav": {
+    "chat": "Chat",
+    "editor": "Editor",
+    "preview": "Preview"
+  },
+  "chat": {
+    "title": "Brief",
+    "placeholder": "Describe the app or game you want…",
+    "build": "Build",
+    "stop": "Stop",
+    "emptyTitle": "What should we make?",
+    "emptyBody": "Write a brief in plain language. The agent will create HTML, CSS, and JavaScript, then run it in the preview.",
+    "you": "You",
+    "agent": "Agent",
+    "thinking": "Building",
+    "toolCall": "Tool",
+    "buildComplete": "Build complete",
+    "error": "The agent hit an error",
+    "needKey": "Add a Gemini API key before building.",
+    "iteration": "Step {{current}} of {{max}}"
+  },
+  "examples": {
+    "title": "Try a brief",
+    "snake": "Build a polished snake game with score, pause, and a dark arcade look.",
+    "todo": "Build a bilingual todo app with filters, local save, and keyboard shortcuts.",
+    "calculator": "Build a scientific calculator with history and keyboard support.",
+    "platformer": "Build a short two-level platformer with coins, a jump pad, and a win screen."
+  },
+  "editor": {
+    "title": "Files",
+    "empty": "Generated files appear here.",
+    "emptyHint": "Run a build, or load the sample project to inspect the editor.",
+    "loadSample": "Load sample",
+    "untitled": "untitled"
+  },
+  "preview": {
+    "title": "Live preview",
+    "run": "Run",
+    "empty": "Nothing to preview yet.",
+    "emptyHint": "Build a project or load the sample, then press Run.",
+    "sandbox": "Sandboxed iframe"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageHint": "Persian uses a right-to-left layout.",
+    "persian": "Persian",
+    "english": "English",
+    "theme": "Theme",
+    "themeHint": "System follows the device appearance.",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "model": "Model",
+    "modelHint": "Latest Gemini models, plus fallbacks.",
+    "customModel": "Custom model name",
+    "customPlaceholder": "e.g. gemini-3.8-flash",
+    "clearProject": "Clear project",
+    "clearHint": "Removes files and chat from this device.",
+    "close": "Close"
+  },
+  "apiKey": {
+    "title": "Gemini API keys",
+    "description": "Keys stay on this device, obfuscated in local storage. On 429 or 403 the agent rotates to the next key.",
+    "add": "Add key",
+    "placeholder": "Paste a Gemini API key",
+    "save": "Save",
+    "remove": "Remove",
+    "empty": "No keys yet.",
+    "usage": "{{count}} calls",
+    "invalid": "That does not look like a valid key.",
+    "active": "Active",
+    "open": "API keys",
+    "missing": "No key"
+  },
+  "model": {
+    "flash36": "3.6 Flash",
+    "flash36Hint": "All-around help",
+    "flashLite35": "3.5 Flash-Lite",
+    "flashLite35Hint": "Fastest answers",
+    "pro31": "3.1 Pro",
+    "pro31Hint": "Advanced reasoning",
+    "thinking": "Extended thinking",
+    "thinkingHint": "Complex problem solving",
+    "fallbackFlash": "gemini-2.5-flash",
+    "fallbackPro": "gemini-2.5-pro",
+    "fallback": "API fallback",
+    "custom": "Custom model name",
+    "latest": "Latest"
+  },
+  "status": {
+    "ready": "Ready",
+    "building": "Building",
+    "error": "Error"
+  },
+  "sample": {
+    "loaded": "Sample project loaded. Press Run to play."
+  }
+}

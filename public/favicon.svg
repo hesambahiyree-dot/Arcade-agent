@@ -1,4 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ArcadeAgent">
-  <rect width="32" height="32" rx="8" fill="#0B0C0E"/>
-  <path fill="#F2F1EE" d="M16 5.6 27.8 26h-5.4l-1.9-4.6h-9L9.6 26H4.2L16 5.6zm0 6.9-2.8 6.4h5.6L16 12.5z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="ArcadeAgent">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#fafafa"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0.15" y1="0.1" x2="0.85" y2="0.9">
+      <stop offset="0" stop-color="#c33cff"/>
+      <stop offset="1" stop-color="#7132e8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="190" fill="url(#bg)"/>
+  <path fill="url(#mark)" d="M510 196 286 592h177l67 116 70-116H473l63-111 63 111h177L552 196h-42zm-72 610L246 608h132l132 230h-72zm158 0h-72l-38-67 67-116 78 183h-35zm62-214h132L620 310l-62 111 100 171z"/>
 </svg>

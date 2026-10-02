@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { clearFiles, replaceAll, snapshot, type FileMap } from "@/core/fs";
-import { SAMPLE_ACTIVE, SAMPLE_FILES } from "@/core/sampleProject";
 import { DEFAULT_MODEL_ID } from "@/core/models";
 import i18n, {
   LANG_STORAGE_KEY,
@@ -50,7 +49,6 @@ export type AppState = {
   setMobilePanel: (panel: MobilePanel) => void;
   setSettingsOpen: (open: boolean) => void;
   setApiKeyModalOpen: (open: boolean) => void;
-  loadSample: () => void;
   clearProject: () => void;
 };
 
@@ -159,16 +157,8 @@ export const useStore = create<AppState>()(
       setSettingsOpen: (open) => set({ settingsOpen: open }),
       setApiKeyModalOpen: (open) => set({ apiKeyModalOpen: open }),
 
-      loadSample: () => {
-        replaceAll(SAMPLE_FILES);
-        set((state) => ({
-          files: { ...SAMPLE_FILES },
-          activeFile: SAMPLE_ACTIVE,
-          previewNonce: state.previewNonce + 1,
-          mobilePanel: "preview",
-        }));
-      },
-
+      // A new project is always a genuinely empty workspace. Nothing from the
+      // previous project is copied into it and no built-in demo files are injected.
       clearProject: () => {
         clearFiles();
         set({
@@ -177,6 +167,8 @@ export const useStore = create<AppState>()(
           activeFile: null,
           previewNonce: get().previewNonce + 1,
           iteration: 0,
+          mobilePanel: "chat",
+          isBuilding: false,
         });
       },
     }),

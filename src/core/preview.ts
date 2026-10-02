@@ -24,7 +24,13 @@ export function buildPreviewHtml(files: FileMap): string {
     return `<!doctype html><html><body style="font-family:system-ui;padding:24px;color:#8b8d93;background:#0b0c0e">No index.html</body></html>`;
   }
 
-  let next = html.replace(
+  // Models sometimes return a body fragment instead of a full document.
+  // Wrapping it here keeps preview usable without another API round trip.
+  let next = /<html[\s>]/i.test(html)
+    ? html
+    : `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${html}</body></html>`;
+
+  next = next.replace(
     /<link\b[^>]*href=["']([^"']+)["'][^>]*>/gi,
     (full, href: string) => {
       if (/^https?:|^data:|^\/\//i.test(href)) return full;

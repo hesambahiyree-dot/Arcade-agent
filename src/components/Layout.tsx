@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Group, Panel, Separator as ResizeSeparator } from "react-resizable-panels";
-import { KeyRound, Settings2 } from "lucide-react";
+import { KeyRound, Plus, Settings2 } from "lucide-react";
 import { ChatPanel } from "@/components/ChatPanel";
 import { EditorPanel } from "@/components/EditorPanel";
 import { PreviewPanel } from "@/components/PreviewPanel";
@@ -19,6 +19,7 @@ export function Layout() {
   const setMobilePanel = useStore((s) => s.setMobilePanel);
   const setSettingsOpen = useStore((s) => s.setSettingsOpen);
   const setApiKeyModalOpen = useStore((s) => s.setApiKeyModalOpen);
+  const clearProject = useStore((s) => s.clearProject);
   const modelId = useStore((s) => s.modelId);
   const isBuilding = useStore((s) => s.isBuilding);
   const theme = useStore((s) => s.theme);
@@ -38,10 +39,19 @@ export function Layout() {
     return () => media.removeEventListener("change", onChange);
   }, [theme]);
 
+  function newProject() {
+    if (isBuilding) return;
+    clearProject();
+  }
+
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
       <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border px-3 lg:px-4">
-        <Mark />
+        <img
+          src="/favicon.svg"
+          alt="ArcadeAgent"
+          className="size-8 shrink-0 rounded-[9px]"
+        />
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold tracking-tight">
             {t("app.name")}
@@ -50,8 +60,20 @@ export function Layout() {
             {t("app.shortTagline")}
           </p>
         </div>
-        <div className="ms-auto flex items-center gap-2">
-          <span className="hidden max-w-48 truncate rounded-full border border-border px-2.5 py-1 text-[11px] text-muted-foreground sm:inline">
+        <div className="ms-auto flex items-center gap-1.5">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={newProject}
+            disabled={isBuilding}
+            className="gap-1.5"
+            aria-label={t("project.new", "New project")}
+          >
+            <Plus className="size-3.5" />
+            <span className="hidden sm:inline">{t("project.new", "New project")}</span>
+          </Button>
+          <span className="hidden max-w-48 truncate rounded-full border border-border px-2.5 py-1 text-[11px] text-muted-foreground md:inline">
             {modelLabel ? t(modelLabel.labelKey) : t("model.custom")}
           </span>
           <span
@@ -129,17 +151,5 @@ export function Layout() {
       <SettingsModal />
       <ApiKeyModal />
     </div>
-  );
-}
-
-function Mark() {
-  return (
-    <svg viewBox="0 0 32 32" className="size-8 shrink-0" aria-hidden="true">
-      <rect width="32" height="32" rx="8" className="fill-foreground" />
-      <path
-        d="M9 23V9h6.4c3.3 0 5.4 1.9 5.4 4.7 0 1.9-1.1 3.4-2.8 4.1L22 23h-3.2l-3.5-5H12V23H9Zm3-8.2h3.1c1.6 0 2.6-.9 2.6-2.2S16.7 10.4 15.1 10.4H12v4.4Z"
-        className="fill-background"
-      />
-    </svg>
   );
 }
